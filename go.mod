@@ -94,6 +94,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/prometheus/client_golang v1.19.1
 	github.com/spf13/viper v1.19.0
+	github.com/swaggo/gin-swagger v1.6.0
 	golang.org/x/crypto v0.25.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
 	golang.org/x/text v0.16.0 // indirect

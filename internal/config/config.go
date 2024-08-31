@@ -31,7 +31,7 @@ func MustLoad() {
 	// Reading config from a file
 	viper.SetConfigName(configType)
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("config")
+	viper.AddConfigPath("configs")
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic("Error loading config: " + err.Error())

@@ -16,7 +16,7 @@ WORKDIR /app
 # Copy binary 
 COPY --from=builder /app/rest-api-service .
 # Copy configs
-COPY --from=builder /app/config ./config
+COPY --from=builder /app/configs ./configs
 # Copy .env, which contains configuration type
 COPY --from=builder /app/.env .
 # Copy migration files

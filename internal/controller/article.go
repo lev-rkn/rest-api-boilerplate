@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"rest-api-service/internal/domain"
-	"rest-api-service/internal/lib/utils"
+	"rest-api-service/internal/logger"
 	"rest-api-service/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -31,20 +31,22 @@ func InitArticleController(
 	return articleController
 }
 
-// @Summary	Создание объявления
-// @Tags		articles
-// @Accept		json
-// @Produce	json
-// @Param		article	body		models.Article	true	"Объявление"
-// @Success	201		{int}		id
-// @Failure	400		{string}	string	"Barticle Request"
-// @Failure	500		{string}	string	"Internal Server Error"
-// @Router		/article/create/ [post]
+// CreateArticle godoc
+//
+//	@Summary	CreateArticle
+//	@Tags		articles
+//	@Accept		json
+//	@Produce	json
+//	@Param		article	body		domain.Article	true	"Article"
+//	@Success	201		{int}		id
+//	@Failure	400		{string}	string	"Bad Request"
+//	@Failure	500		{string}	string	"Internal Server Error"
+//	@Router		/article/create/ [post]
 func (a *articleController) CreateArticle(c *gin.Context) {
 	article := &domain.Article{}
 	err := json.NewDecoder(c.Request.Body).Decode(&article)
 	if err != nil {
-		utils.ErrorLog("unable to decode article", err)
+		logger.ErrorLog("unable to decode article", err)
 		errorResponse(c, http.StatusBadRequest, err)
 		return
 	}
@@ -52,7 +54,7 @@ func (a *articleController) CreateArticle(c *gin.Context) {
 	validate := validator.New()
 	err = validate.Struct(article)
 	if err != nil {
-		utils.ErrorLog("validate article", err)
+		logger.ErrorLog("validate article", err)
 		errorResponse(c, http.StatusBadRequest, err)
 		return
 	}
@@ -60,11 +62,11 @@ func (a *articleController) CreateArticle(c *gin.Context) {
 	id, err := a.articleService.CreateArticle(article)
 	if err != nil {
 		// if errors.Is(err, domain.ErrArticleNotFound) {
-		// 	utils.ErrorLog("a.articleService.CreateArticle", err)
+		// 	logger.ErrorLog("a.articleService.CreateArticle", err)
 		// 	errorResponse(c, http.StatusNotFound, err)
 		// 	return
 		// }
-		utils.ErrorLog("article creating by service", err)
+		logger.ErrorLog("article creating by service", err)
 		errorResponse(c, http.StatusInternalServerError, err)
 		return
 	}

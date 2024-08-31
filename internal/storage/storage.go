@@ -4,7 +4,7 @@ import (
 	"context"
 	"rest-api-service/internal/config"
 	"rest-api-service/internal/domain"
-	"rest-api-service/internal/lib/utils"
+	"rest-api-service/internal/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
@@ -19,7 +19,7 @@ type Storage struct {
 func NewStorage(ctx context.Context) *Storage {
 	pool, err := pgxpool.New(ctx, config.Cfg.Postgres.PgUrl)
 	if err != nil {
-		utils.ErrorLog("Unable to connect to database", err)
+		logger.ErrorLog("Unable to connect to database", err)
 	}
 	pool.Config().MaxConns = config.Cfg.Postgres.MaxConnections
 

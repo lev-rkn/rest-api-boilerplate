@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"rest-api-service/internal/app"
-	"rest-api-service/internal/lib/utils"
+	"rest-api-service/internal/logger"
 	"syscall"
 	"time"
 )
@@ -17,7 +17,7 @@ func main() {
 
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			utils.ErrorLog("Listen server", err)
+			logger.ErrorLog("Listen server", err)
 		}
 	}()
 
@@ -33,7 +33,7 @@ func gracefulShutdown(server *http.Server) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		utils.ErrorLog("Server Shutdown:", err)
+		logger.ErrorLog("Server Shutdown:", err)
 	}
 
 	<-ctx.Done()
