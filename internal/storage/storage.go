@@ -3,7 +3,6 @@ package storage
 import (
 	"context"
 	"rest-api-service/internal/config"
-	"rest-api-service/internal/domain"
 	"rest-api-service/internal/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -13,7 +12,7 @@ import (
 )
 
 type Storage struct {
-	Article ArticleRepoInterface
+	Article *articleRepo
 }
 
 func NewStorage(ctx context.Context) *Storage {
@@ -28,9 +27,4 @@ func NewStorage(ctx context.Context) *Storage {
 	}
 
 	return storage
-}
-
-//go:generate mockery --name ArticleRepoInterface --output ./mocks
-type ArticleRepoInterface interface {
-	Create(article *domain.Article) (int, error)
 }

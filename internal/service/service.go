@@ -1,24 +1,19 @@
 package service
 
 import (
-	"rest-api-service/internal/domain"
 	"rest-api-service/internal/storage"
 )
 
 type Service struct {
-	Article ArticleServiceInterface
+	Article *articleService
 }
 
 func NewService(
 	storage *storage.Storage,
 ) *Service {
 	return &Service{
-		Article: &articleService{storage: storage},
+		Article: &articleService{articleStorage: storage.Article},
 	}
 }
 
 
-//go:generate mockery --name ArticleServiceInterface --output ./mocks
-type ArticleServiceInterface interface {
-	CreateArticle(article *domain.Article) (int, error)
-}

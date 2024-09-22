@@ -6,20 +6,24 @@ import (
 	"net/http"
 	"rest-api-service/internal/domain"
 	"rest-api-service/internal/logger"
-	"rest-api-service/internal/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
 )
 
+//go:generate mockery --name ArticleServiceInterface --output ./mocks
+type ArticleServiceInterface interface {
+	CreateArticle(article *domain.Article) (int, error)
+}
+
 type articleController struct {
 	ctx            context.Context
-	articleService service.ArticleServiceInterface
+	articleService ArticleServiceInterface
 }
 
 func InitArticleController(
 	ctx context.Context,
-	articleService service.ArticleServiceInterface,
+	articleService ArticleServiceInterface,
 	router *gin.RouterGroup,
 ) *articleController {
 	articleController := &articleController{

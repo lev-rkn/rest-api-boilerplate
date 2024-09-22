@@ -7,21 +7,19 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type ArticleRepo struct {
+type articleRepo struct {
 	ctx  context.Context
 	conn *pgxpool.Pool
 }
 
-var _ ArticleRepoInterface = (*ArticleRepo)(nil)
-
-func NewArticleRepo(ctx context.Context, conn *pgxpool.Pool) *ArticleRepo {
-	return &ArticleRepo{
+func NewArticleRepo(ctx context.Context, conn *pgxpool.Pool) *articleRepo {
+	return &articleRepo{
 		ctx:  ctx,
 		conn: conn,
 	}
 }
 
-func (s *ArticleRepo) Create(article *domain.Article) (int, error) {
+func (s *articleRepo) Create(article *domain.Article) (int, error) {
 	var id int
 	err := s.conn.QueryRow(s.ctx,
 		`INSERT INTO articles (title, description, photos, user_id) 
