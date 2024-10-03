@@ -10,25 +10,14 @@ import (
 	"github.com/swaggo/http-swagger"
 )
 
-//	@title			Swagger Example API
+//	@title			rest-api-boilerplate
 //	@version		1.0
 //	@description	This is a rest-api-boilerplate.
-//	@termsOfService	http://swagger.io/terms/
-
-//	@contact.name	API Support
-//	@contact.url	http://www.swagger.io/support
-//	@contact.email	support@swagger.io
-
-//	@license.name	Apache 2.0
-//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
-
-//	@host		localhost:8080
-//	@BasePath	/
-
-//	@externalDocs.description	OpenAPI
-//	@externalDocs.url			https://swagger.io/resources/open-api/
+//	@host			localhost:8080
+//	@BasePath		/
 func NewRouter(ctx context.Context, service *service.Service) *gin.Engine {
 	router := gin.Default()
+
 
 	articleRouter := router.Group("/article/")
 	InitArticleController(ctx, service.Article, articleRouter)

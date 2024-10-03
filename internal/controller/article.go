@@ -11,19 +11,18 @@ import (
 	"github.com/go-playground/validator"
 )
 
-//go:generate mockery --name ArticleServiceInterface --output ./mocks
-type ArticleServiceInterface interface {
-	CreateArticle(article *domain.Article) (int, error)
+type createArticleResponse struct {
+	Id int `json:"id"`
 }
 
 type articleController struct {
 	ctx            context.Context
-	articleService ArticleServiceInterface
+	articleService articleService
 }
 
 func InitArticleController(
 	ctx context.Context,
-	articleService ArticleServiceInterface,
+	articleService articleService,
 	router *gin.RouterGroup,
 ) *articleController {
 	articleController := &articleController{
@@ -37,14 +36,14 @@ func InitArticleController(
 
 // CreateArticle godoc
 //
-//	@Summary	CreateArticle
+//	@Summary	CreateArticle creates new article
 //	@Tags		articles
 //	@Accept		json
 //	@Produce	json
-//	@Param		article	body		domain.Article	true	"Article"
-//	@Success	201		{int}		id
-//	@Failure	400		{string}	string	"Bad Request"
-//	@Failure	500		{string}	string	"Internal Server Error"
+//	@Param		article	body		domain.Article	true "Article"
+//	@Success	201		{object}	createArticleResponse
+//	@Failure	400		{object}	ErrorResponse
+//	@Failure	500		{object}	ErrorResponse
 //	@Router		/article/create/ [post]
 func (a *articleController) CreateArticle(c *gin.Context) {
 	article := &domain.Article{}
@@ -75,5 +74,5 @@ func (a *articleController) CreateArticle(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"id": id})
+	c.JSON(http.StatusCreated, createArticleResponse{Id: id})
 }

@@ -1,5 +1,15 @@
 basePath: /
 definitions:
+  controller.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  controller.createArticleResponse:
+    properties:
+      id:
+        type: integer
+    type: object
   domain.Article:
     properties:
       description:
@@ -22,21 +32,11 @@ definitions:
     - photos
     - title
     type: object
-externalDocs:
-  description: OpenAPI
-  url: https://swagger.io/resources/open-api/
 host: localhost:8080
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
+  contact: {}
   description: This is a rest-api-boilerplate.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: rest-api-boilerplate
   version: "1.0"
 paths:
   /article/create/:
@@ -56,16 +56,16 @@ paths:
         "201":
           description: Created
           schema:
-            type: int
+            $ref: '#/definitions/controller.createArticleResponse'
         "400":
           description: Bad Request
           schema:
-            type: string
+            $ref: '#/definitions/controller.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            type: string
-      summary: CreateArticle
+            $ref: '#/definitions/controller.ErrorResponse'
+      summary: CreateArticle creates new article
       tags:
       - articles
 swagger: "2.0"

@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrArticleNotFound   = errors.New("article not found")
+	ErrArticleNotFound = errors.New("article not found")
 )
 
 type Article struct {

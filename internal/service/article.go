@@ -5,13 +5,8 @@ import (
 	"rest-api-service/internal/domain"
 )
 
-//go:generate mockery --name ArticleRepoInterface --output ./mocks
-type ArticleRepoInterface interface {
-	Create(article *domain.Article) (int, error)
-}
-
 type articleService struct {
-	articleStorage ArticleRepoInterface
+	articleStorage articleRepository
 }
 
 func (s *articleService) CreateArticle(article *domain.Article) (int, error) {

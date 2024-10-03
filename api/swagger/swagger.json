@@ -2,17 +2,8 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a rest-api-boilerplate.",
-        "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "title": "rest-api-boilerplate",
+        "contact": {},
         "version": "1.0"
     },
     "host": "localhost:8080",
@@ -29,7 +20,7 @@
                 "tags": [
                     "articles"
                 ],
-                "summary": "CreateArticle",
+                "summary": "CreateArticle creates new article",
                 "parameters": [
                     {
                         "description": "Article",
@@ -45,19 +36,19 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/controller.createArticleResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/controller.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/controller.ErrorResponse"
                         }
                     }
                 }
@@ -65,6 +56,22 @@
         }
     },
     "definitions": {
+        "controller.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.createArticleResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "domain.Article": {
             "type": "object",
             "required": [
@@ -96,9 +103,5 @@
                 }
             }
         }
-    },
-    "externalDocs": {
-        "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api/"
     }
 }

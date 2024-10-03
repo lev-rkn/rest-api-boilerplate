@@ -14,6 +14,10 @@ var (
 	ErrInvalidToken      = errors.New("invalid access token")
 )
 
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
 func errorResponse(c *gin.Context, code int, err error) {
 	var errMessage string
 	unwrapped := errors.Unwrap(err)
@@ -23,7 +27,5 @@ func errorResponse(c *gin.Context, code int, err error) {
 		errMessage = unwrapped.Error()
 	}
 
-	c.JSON(code, gin.H{
-		"error": errMessage,
-	})
+	c.JSON(code, ErrorResponse{Error: errMessage})
 }
